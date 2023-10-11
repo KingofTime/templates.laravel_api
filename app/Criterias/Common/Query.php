@@ -43,9 +43,7 @@ class Query
     }
 
     /**
-     * @param string $field
-     * @param array<mixed> $values
-     * @return InCriteria
+     * @param  array<mixed>  $values
      */
     public static function in(string $field, array $values): InCriteria
     {

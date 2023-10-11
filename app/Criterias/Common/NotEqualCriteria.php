@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class NotEqualCriteria extends OperatorCriteria
 {
     /**
-     * @param Model|Builder<Model> $builder
+     * @param  Model|Builder<Model>  $builder
      * @return Model|Builder<Model>
      */
     public function apply(Model|Builder $builder): Model|Builder

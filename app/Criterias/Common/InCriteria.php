@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class InCriteria extends OperatorCriteria
 {
     /**
-     * @param string $field
-     * @param array<mixed> $value
+     * @param  array<mixed>  $value
      */
     public function __construct(string $field, array $value)
     {
         parent::__construct($field, $value);
     }
+
     /**
-     * @param Model|Builder<Model> $builder
+     * @param  Model|Builder<Model>  $builder
      * @return Model|Builder<Model>
      */
     public function apply(Model|Builder $builder): Model|Builder

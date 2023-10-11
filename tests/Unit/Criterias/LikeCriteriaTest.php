@@ -25,16 +25,16 @@ class LikeCriteriaTest extends TestCase
     public function test_like_criteria(): void
     {
 
-        $criteria = new LikeCriteria('email', ".example");
+        $criteria = new LikeCriteria('email', '.example');
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertCount(5, $filtered_users);
 
-        $criteria = new LikeCriteria('email', ".example1");
+        $criteria = new LikeCriteria('email', '.example1');
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertCount(1, $filtered_users);
-        $this->assertTrue($filtered_users->contains("email", '=', "user.example1@email.com"));
+        $this->assertTrue($filtered_users->contains('email', '=', 'user.example1@email.com'));
     }
 
     /**
@@ -43,7 +43,7 @@ class LikeCriteriaTest extends TestCase
      */
     public function test_equals_criteria_when_not_found(): void
     {
-        $criteria = new LikeCriteria('email', ".example.nfound");
+        $criteria = new LikeCriteria('email', '.example.nfound');
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertEmpty($filtered_users);

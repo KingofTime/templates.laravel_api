@@ -35,7 +35,6 @@ class LessThanCriteriaTest extends TestCase
         $this->assertCount(2, $filtered_users);
     }
 
-
     /**
      * Less Than Criteria
      * Case: value not found

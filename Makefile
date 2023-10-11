@@ -12,7 +12,7 @@ scan:
 	./vendor/bin/phpstan analyse
 
 lint:
-	./vendor/bin/pint --preset psr12
+	./vendor/bin/pint --preset laravel
 
 test:
 	./vendor/bin/sail artisan test --parallel --recreate-databases

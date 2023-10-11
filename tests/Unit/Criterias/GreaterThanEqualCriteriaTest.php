@@ -36,7 +36,6 @@ class GreaterThanEqualCriteriaTest extends TestCase
         $this->assertCount(3, $filtered_users);
     }
 
-
     /**
      * Greater Than Equal Criteria
      * Case: value not found

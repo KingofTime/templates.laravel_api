@@ -29,7 +29,7 @@ class EqualsCriteriaTest extends TestCase
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertCount(1, $filtered_users);
-        $this->assertTrue($filtered_users->contains("email", '=', "user.example1@email.com"));
+        $this->assertTrue($filtered_users->contains('email', '=', 'user.example1@email.com'));
     }
 
     /**
@@ -38,11 +38,11 @@ class EqualsCriteriaTest extends TestCase
      */
     public function test_equals_criteria_with_string_field(): void
     {
-        $criteria = new EqualsCriteria('email', "user.example3@email.com");
+        $criteria = new EqualsCriteria('email', 'user.example3@email.com');
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertCount(1, $filtered_users);
-        $this->assertTrue($filtered_users->contains("profile_id", '=', 3));
+        $this->assertTrue($filtered_users->contains('profile_id', '=', 3));
     }
 
     /**
@@ -51,7 +51,7 @@ class EqualsCriteriaTest extends TestCase
      */
     public function test_equals_criteria_when_not_found(): void
     {
-        $criteria = new EqualsCriteria('email', "notfoundemail@email.com");
+        $criteria = new EqualsCriteria('email', 'notfoundemail@email.com');
         $filtered_users = $criteria->apply(new User())->get();
 
         $this->assertEmpty($filtered_users);

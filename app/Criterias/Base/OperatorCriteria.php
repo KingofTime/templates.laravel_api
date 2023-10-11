@@ -15,7 +15,7 @@ abstract class OperatorCriteria implements CriteriaInterface
     }
 
     /**
-     * @param Model|Builder<Model> $builder
+     * @param  Model|Builder<Model>  $builder
      * @return Model|Builder<Model>
      */
     abstract public function apply(Model|Builder $builder): Model|Builder;

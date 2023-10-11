@@ -25,8 +25,8 @@ class QueueCriteriaTest extends TestCase
     public function test_queue_criteria(): void
     {
         $criteria = new QueueCriteria([
-            new LessThanCriteria("profile_id", 4),
-            new GreaterThanEqualCriteria("profile_id", 2)
+            new LessThanCriteria('profile_id', 4),
+            new GreaterThanEqualCriteria('profile_id', 2),
         ]);
 
         $filtered_users = $criteria->apply(new User())->get();
@@ -41,10 +41,10 @@ class QueueCriteriaTest extends TestCase
     public function test_append_criteria(): void
     {
         $criteria = new QueueCriteria([
-            new NotEqualCriteria("profile_id", 1)
+            new NotEqualCriteria('profile_id', 1),
         ]);
 
-        $criteria->append(new LessThanEqualCriteria("profile_id", 3));
+        $criteria->append(new LessThanEqualCriteria('profile_id', 3));
         $filtered_users = $criteria->apply(new User())->get();
         $filtered_profile_ids = $filtered_users
             ->map(fn (User $user) => $user->profile_id) //@phpstan-ignore-line
@@ -57,8 +57,8 @@ class QueueCriteriaTest extends TestCase
     public function test_queue_criteria_when_not_found(): void
     {
         $criteria = new QueueCriteria([
-            new GreaterThanEqualCriteria("profile_id", 4),
-            new LessThanCriteria("profile_id", 2)
+            new GreaterThanEqualCriteria('profile_id', 4),
+            new LessThanCriteria('profile_id', 2),
         ]);
 
         $filtered_users = $criteria->apply(new User())->get();

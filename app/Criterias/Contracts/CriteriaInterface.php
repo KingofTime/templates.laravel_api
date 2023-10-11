@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 interface CriteriaInterface
 {
     /**
-     * @param Model|Builder<Model> $builder
+     * @param  Model|Builder<Model>  $builder
      * @return Model|Builder<Model>
      */
     public function apply(Builder|Model $builder): Model|Builder;

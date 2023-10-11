@@ -31,9 +31,9 @@ class InCriteriaTest extends TestCase
             ->toArray();
 
         $this->assertEquals([
-            "user.example1@email.com",
-            "user.example2@email.com",
-            "user.example3@email.com"
+            'user.example1@email.com',
+            'user.example2@email.com',
+            'user.example3@email.com',
         ], $filtered_profile_emails);
         $this->assertCount(3, $filtered_users);
     }
@@ -45,16 +45,16 @@ class InCriteriaTest extends TestCase
     public function test_in_criteria_with_array_of_strings_field(): void
     {
         $criteria = new InCriteria('email', [
-            "user.example1@email.com",
-            "user.example2@email.com",
-            "user.example3@email.com"
+            'user.example1@email.com',
+            'user.example2@email.com',
+            'user.example3@email.com',
         ]);
         $filtered_users = $criteria->apply(new User())->get();
         $filtered_profile_ids = $filtered_users
             ->map(fn (User $user) => $user->profile_id) //@phpstan-ignore-line
             ->toArray();
 
-        $this->assertEquals([1,2,3], $filtered_profile_ids);
+        $this->assertEquals([1, 2, 3], $filtered_profile_ids);
         $this->assertCount(3, $filtered_users);
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class QueueCriteria implements CriteriaInterface
 {
     /**
-     * @param array<CriteriaInterface> $criterias
+     * @param  array<CriteriaInterface>  $criterias
      */
     public function __construct(
         protected array $criterias = []
@@ -22,7 +22,7 @@ class QueueCriteria implements CriteriaInterface
     }
 
     /**
-     * @param Model|Builder<Model> $builder
+     * @param  Model|Builder<Model>  $builder
      * @return Model|Builder<Model>
      */
     public function apply(Model|Builder $builder): Model|Builder
