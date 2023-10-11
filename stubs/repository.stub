@@ -1,0 +1,17 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Repositories\Base\ResourceRepository;
+$IMPORT_TRAITS$
+use App\Models\$MODEL_NAME$;
+
+class $CLASS_NAME$ extends ResourceRepository
+{
+    $USE_TRAITS$
+
+    protected function getModel(): $MODEL_NAME$
+    {
+        return new $MODEL_NAME$();
+    }
+}
