@@ -17,27 +17,27 @@ class Query
         return new EqualsCriteria($field, $value);
     }
 
-    public static function lt(string $field, mixed $value): LessThanCriteria
+    public static function lt(string $field, int|float $value): LessThanCriteria
     {
         return new LessThanCriteria($field, $value);
     }
 
-    public static function lte(string $field, mixed $value): LessThanEqualCriteria
+    public static function lte(string $field, int|float $value): LessThanEqualCriteria
     {
         return new LessThanEqualCriteria($field, $value);
     }
 
-    public static function gt(string $field, mixed $value): GreaterThanCriteria
+    public static function gt(string $field, int|float $value): GreaterThanCriteria
     {
         return new GreaterThanCriteria($field, $value);
     }
 
-    public static function gte(string $field, mixed $value): GreaterThanEqualCriteria
+    public static function gte(string $field, int|float $value): GreaterThanEqualCriteria
     {
         return new GreaterThanEqualCriteria($field, $value);
     }
 
-    public static function ne(string $field, string $value): NotEqualCriteria
+    public static function ne(string $field, mixed $value): NotEqualCriteria
     {
         return new NotEqualCriteria($field, $value);
     }

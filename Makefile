@@ -14,6 +14,9 @@ scan:
 lint:
 	./vendor/bin/pint --preset psr12
 
+test:
+	./vendor/bin/sail artisan test --parallel --recreate-databases
+
 prune:
 	docker-compose down --rmi all -v --remove-orphans
 

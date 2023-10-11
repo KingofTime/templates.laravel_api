@@ -12,7 +12,7 @@ class QueueCriteria implements CriteriaInterface
      * @param array<CriteriaInterface> $criterias
      */
     public function __construct(
-        protected array $criterias
+        protected array $criterias = []
     ) {
     }
 

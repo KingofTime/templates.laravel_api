@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LikeCriteria extends OperatorCriteria
 {
+    public function __construct(string $field, string $value)
+    {
+        parent::__construct($field, $value);
+    }
+
     /**
      * @param Model|Builder<Model> $builder
      * @return Model|Builder<Model>

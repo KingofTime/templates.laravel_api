@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class GreaterThanCriteria extends OperatorCriteria
 {
+    public function __construct(string $field, int|float $value)
+    {
+        parent::__construct($field, $value);
+    }
+
     /**
      * @param Model|Builder<Model> $builder
      * @return Model|Builder<Model>
