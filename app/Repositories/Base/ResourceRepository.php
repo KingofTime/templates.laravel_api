@@ -30,7 +30,7 @@ abstract class ResourceRepository extends Repository
     }
 
     /**
-     * @return LengthAwarePaginator<Collection<int, Model>>
+     * @return LengthAwarePaginator<Model>
      */
     public function paginate(CriteriaInterface $criteria, int $page, int $per_page, string $page_name, string $order_by, string $sort): LengthAwarePaginator
     {

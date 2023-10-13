@@ -1,0 +1,44 @@
+    public function test_find_$SINGULAR_MODEL_NAME$_in_trash()
+    {}
+
+    public function test_find_$SINGULAR_MODEL_NAME$_in_trash_when_not_found()
+    {}
+
+    public function test_first_$SINGULAR_MODEL_NAME$_in_trash()
+    {}
+
+    public function test_first_$SINGULAR_MODEL_NAME$_in_trash_not_found()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$_in_trash()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$_in_trash_when_not_found()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$_in_trash_with_order_by_and_sort()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_in_trash()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_in_trash_not_found()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_in_trash_with_page_and_per_page()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_in_trash_with_order_by_and_sort()
+    {}
+
+    public function test_restore_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_restore_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}
+
+    public function test_force_delete_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_force_delete_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}

@@ -1,0 +1,73 @@
+<?php
+
+namespace Tests\Unit\Repositories;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class $CLASS_NAME$Test extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_find_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_find_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}
+
+    public function test_first_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_first_$SINGULAR_MODEL_NAME$_not_found()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$_when_not_found()
+    {}
+
+    public function test_get_$PLURAL_MODEL_NAME$_with_order_by_and_sort()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_not_found()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_with_page_and_per_page()
+    {}
+
+    public function test_paginate_$PLURAL_MODEL_NAME$_with_order_by_and_sort()
+    {}
+
+    public function test_exists_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_exists_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}
+
+    public function test_create_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_create_$SINGULAR_MODEL_NAME$_when_validation_error()
+    {}
+
+    public function test_update_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_update_$SINGULAR_MODEL_NAME$_when_validation_error()
+    {}
+
+    public function test_update_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}
+
+    public function test_delete_$SINGULAR_MODEL_NAME$()
+    {}
+
+    public function test_delete_$SINGULAR_MODEL_NAME$_when_not_found()
+    {}
+
+$ADDITIONAL_TESTS$
+}

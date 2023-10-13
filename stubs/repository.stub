@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace App\Repositories;
 
 use App\Repositories\Base\ResourceRepository;
 $IMPORT_TRAITS$

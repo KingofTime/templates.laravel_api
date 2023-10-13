@@ -2,11 +2,26 @@
 
 namespace App\Console\Commands;
 
+use _PHPStan_adbc35a1c\Nette\PhpGenerator\PhpLiteral;
 use App\Console\Commands\Base\GenericMakeCommand;
+use Illuminate\Support\Pluralizer;
+
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use function Laravel\Prompts\multiselect;
 
 class MakeRepositories extends GenericMakeCommand
 {
+    const EXTRA_FEATURES = [
+      "trash" => [
+          "trait_name" => "TrashMethods",
+          "test_file" => "repository.test.feature.trash.stub"
+      ],
+      "aggregation" => [
+          "trait_name" => "AggregationMethods",
+          "test_file" => "repository.test.feature.aggregation.stub"
+      ]
+    ];
+
     /**
      * The name and signature of the console command.
      *
@@ -24,48 +39,104 @@ class MakeRepositories extends GenericMakeCommand
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        $traits = multiselect('Do you want to add any extra traits?',
-        ['TrashMethods', 'AggregationMethods']);
+        $extraFeatures = multiselect(
+            label: 'Do you want to add any extra modules?',
+            options: [
+                'trash' => 'Trash Features',
+                'aggregation' => 'Aggregation Features'
+            ]);
 
-        $path = $this->makeDirectory('Repositories');
+        $this->generateRepository($extraFeatures);
+        $this->generateRepositoryTest($extraFeatures);
+    }
+
+    /**
+     * @param array<int|string> $extraFeatures
+     * @return void
+     */
+    private function generateRepository(array $extraFeatures): void
+    {
+        $traits = $this->getContentExtraFeatures($extraFeatures);
+        $path = $this->makeDirectory('app/Repositories');
         $content = $this->getContent('repository.stub', [
-            'NAMESPACE' => 'App\Repositories',
             'CLASS_NAME' => $this->argument('name'),
-            'MODEL_NAME' => $this->getModel(),
-            'IMPORT_TRAITS' => $this->getImportTraits($traits),
-            'USE_TRAITS' => $this->getUseTraits($traits)
+            'MODEL_NAME' => $this->getModelName(),
+            'IMPORT_TRAITS' => $traits["imports"],
+            'USE_TRAITS' => $traits["uses"],
         ]);
         $file = "{$path}/{$this->argument('name')}.php";
         $this->makeFile($file, $content);
     }
 
-    private function getModel(): string
+    /**
+     * @param array<int|string> $extraFeatures
+     * @return void
+     */
+    private function generateRepositoryTest(array $extraFeatures): void
+    {
+        $singularModelName = strtolower(Pluralizer::singular($this->getModelName()));
+        $pluralModelName = strtolower(Pluralizer::plural($this->getModelName()));
+
+        $tests = $this->getTestsExtraFeatures($extraFeatures, [
+            "SINGULAR_MODEL_NAME" => $singularModelName,
+            "PLURAL_MODEL_NAME" => $pluralModelName
+        ]);
+
+        $path = $this->makeDirectory('tests/Unit/Repositories');
+        $content = $this->getContent('repository.test.stub', [
+            "CLASS_NAME" => $this->argument('name'),
+            "SINGULAR_MODEL_NAME" => $singularModelName,
+            "PLURAL_MODEL_NAME" => $pluralModelName,
+            "ADDITIONAL_TESTS" => $tests
+        ]);
+        $file = "{$path}/{$this->argument('name')}Test.php";
+        $this->makeFile($file, $content);
+    }
+
+    private function getModelName(): string
     {
         return str_replace('Repository', '', $this->argument('name'));
     }
 
-    private function getUseTraits(array $traits): string
+    private function getContentExtraFeatures(array $extraFeatures): array
     {
-        $content = "";
-        foreach ($traits as $trait)
-        {
-            $content .= "use {$trait};\n\t";
+        $imports = '';
+        $uses = '';
+        foreach ($extraFeatures as $feature) {
+            $trait = self::EXTRA_FEATURES[$feature]["trait_name"];
+
+            $imports .= "use App\Repositories\Base\Traits\\{$trait};\n";
+            $uses .= "use {$trait};\n\t";
         }
 
-        return $content;
+        return [
+            "imports" => $imports,
+            "uses" => $uses
+        ];
     }
 
-    private function getImportTraits(array $traits): string
+    private function getTestsExtraFeatures(array $extraFeatures, array $variables): string
     {
-        $content = "";
-        foreach ($traits as $trait)
-        {
-            $content .= "use App\Repositories\Base\Traits\\{$trait};\n";
+        $tests = '';
+        foreach ($extraFeatures as $feature) {
+            $file = self::EXTRA_FEATURES[$feature]["test_file"];
+
+            $contents = file_get_contents(__DIR__."/../../../stubs/{$file}");
+
+            if ($contents) {
+                $tests .= $contents;
+                $tests .= "\n";
+            } else {
+                throw new FileException("Fail of Read Stub {$file}");
+            }
         }
 
-        return $content;
-    }
+        foreach ($variables as $search => $replace) {
+            $tests = str_replace('$'.$search.'$', $replace, $tests);
+        }
 
+        return $tests;
+    }
 }
