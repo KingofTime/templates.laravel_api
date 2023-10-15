@@ -24,10 +24,9 @@ class GenericRepositoryTest extends TestCase
     public function test_find(): void
     {
         $firstUser = User::first();
-
         $repository = new UserRepository();
-        $user = $repository->find($firstUser->id);
 
+        $user = $repository->find($firstUser->id);
         $this->assertEquals($firstUser, $user);
     }
 
@@ -58,11 +57,11 @@ class GenericRepositoryTest extends TestCase
 
     public function test_first_not_found(): void
     {
+        $this->expectException(ModelNotFoundException::class);
+
         $criteria = Query::eq('email', 'not.found@email.com');
         $repository = new UserRepository();
-        $user = $repository->first($criteria);
-
-        $this->assertNull($user);
+        $repository->first($criteria);
     }
 
     public function test_get(): void
@@ -395,13 +394,14 @@ class GenericRepositoryTest extends TestCase
 
     public function test_first_in_trash_not_found(): void
     {
+        $this->expectException(ModelNotFoundException::class);
+
         $user = User::where('email', 'user.example1@email.com')->first();
         $user->delete();
 
         $repository = new UserRepository();
         $criteria = Query::eq('email', 'notfound@email.com');
-        $deletedUser = $repository->firstInTrash($criteria);
-        $this->assertNull($deletedUser);
+        $repository->firstInTrash($criteria);
     }
 
     public function test_get_in_trash(): void

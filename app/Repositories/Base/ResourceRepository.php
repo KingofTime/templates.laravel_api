@@ -15,9 +15,15 @@ abstract class ResourceRepository extends Repository
         return $this->getModel()::findOrFail($id);
     }
 
-    public function first(CriteriaInterface $criteria): ?Model
+    public function first(CriteriaInterface $criteria): Model
     {
-        return $criteria->apply($this->getModel())->first();
+        $model = $criteria->apply($this->getModel())->first();
+
+        if ($model == null) {
+            throw new ModelNotFoundException();
+        }
+
+        return $model;
     }
 
     /**

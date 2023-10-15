@@ -19,11 +19,17 @@ trait TrashMethods
             ->findOrFail($id);
     }
 
-    public function firstInTrash(CriteriaInterface $criteria): ?Model
+    public function firstInTrash(CriteriaInterface $criteria): Model
     {
-        return $criteria->apply($this->getModel())  //@phpstan-ignore-line
+        $model = $criteria->apply($this->getModel())  //@phpstan-ignore-line
             ->onlyTrashed()
             ->first();
+
+        if ($model == null) {
+            throw new ModelNotFoundException();
+        }
+
+        return $model;
     }
 
     /**

@@ -11,6 +11,18 @@ install:
 scan:
 	./vendor/bin/phpstan analyse
 
+scan.generate_baseline:
+	./vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.php
+
+project.prepare:
+	./vendor/bin/sail artisan project:prepare
+
+project.clear:
+	./vendor/bin/sail artisan project:clear
+
+project.cache:
+	./vendor/bin/sail artisan project:cache
+
 lint:
 	./vendor/bin/pint --preset laravel
 
