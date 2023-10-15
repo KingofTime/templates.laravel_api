@@ -18,10 +18,6 @@ class InCriteriaTest extends TestCase
         $this->seed(GenericTestSeeder::class);
     }
 
-    /**
-     *  In Criteria
-     *  Case: the field is array of integers type
-     */
     public function test_in_criteria_with_array_of_integers_field(): void
     {
         $criteria = new InCriteria('profile_id', [1, 2, 3]);
@@ -38,10 +34,6 @@ class InCriteriaTest extends TestCase
         $this->assertCount(3, $filtered_users);
     }
 
-    /**
-     * In Criteria
-     * Case: the field is array of strings type
-     */
     public function test_in_criteria_with_array_of_strings_field(): void
     {
         $criteria = new InCriteria('email', [
@@ -58,10 +50,6 @@ class InCriteriaTest extends TestCase
         $this->assertCount(3, $filtered_users);
     }
 
-    /**
-     * In Criteria
-     * Case: value not found
-     */
     public function test_in_criteria_when_not_found(): void
     {
         $criteria = new InCriteria('profile_id', [1000]);

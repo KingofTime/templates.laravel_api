@@ -18,10 +18,6 @@ class LikeCriteriaTest extends TestCase
         $this->seed(GenericTestSeeder::class);
     }
 
-    /**
-     * Like Criteria
-     * Case: search by term
-     */
     public function test_like_criteria(): void
     {
 
@@ -37,10 +33,6 @@ class LikeCriteriaTest extends TestCase
         $this->assertTrue($filtered_users->contains('email', '=', 'user.example1@email.com'));
     }
 
-    /**
-     * Like Criteria
-     * Case: value not found
-     */
     public function test_equals_criteria_when_not_found(): void
     {
         $criteria = new LikeCriteria('email', '.example.nfound');

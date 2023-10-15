@@ -18,10 +18,6 @@ class EqualsCriteriaTest extends TestCase
         $this->seed(GenericTestSeeder::class);
     }
 
-    /**
-     * Equals Criteria
-     * Case: the field is integer type
-     */
     public function test_equals_criteria_with_integer_field(): void
     {
 
@@ -32,10 +28,6 @@ class EqualsCriteriaTest extends TestCase
         $this->assertTrue($filtered_users->contains('email', '=', 'user.example1@email.com'));
     }
 
-    /**
-     * Equals Criteria
-     * Case: the field is string type
-     */
     public function test_equals_criteria_with_string_field(): void
     {
         $criteria = new EqualsCriteria('email', 'user.example3@email.com');
@@ -45,10 +37,6 @@ class EqualsCriteriaTest extends TestCase
         $this->assertTrue($filtered_users->contains('profile_id', '=', 3));
     }
 
-    /**
-     * Equals Criteria
-     * Case: value not found
-     */
     public function test_equals_criteria_when_not_found(): void
     {
         $criteria = new EqualsCriteria('email', 'notfoundemail@email.com');

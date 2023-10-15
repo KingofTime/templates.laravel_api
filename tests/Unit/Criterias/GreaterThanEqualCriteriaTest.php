@@ -19,10 +19,6 @@ class GreaterThanEqualCriteriaTest extends TestCase
         $this->seed(GenericTestSeeder::class);
     }
 
-    /**
-     * Greater Than Equal Criteria
-     * Case: the field is integer type
-     */
     public function test_greater_than_equal_criteria_with_integer_field(): void
     {
 
@@ -36,10 +32,6 @@ class GreaterThanEqualCriteriaTest extends TestCase
         $this->assertCount(3, $filtered_users);
     }
 
-    /**
-     * Greater Than Equal Criteria
-     * Case: value not found
-     */
     public function test_greater_than_equal_criteria_when_not_found(): void
     {
         $criteria = new GreaterThanCriteria('profile_id', 1000);

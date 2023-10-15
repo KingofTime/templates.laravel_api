@@ -18,10 +18,6 @@ class LessThanCriteriaTest extends TestCase
         $this->seed(GenericTestSeeder::class);
     }
 
-    /**
-     * Less Than Criteria
-     * Case: the field is integer type
-     */
     public function test_less_than_criteria_with_integer_field(): void
     {
 
@@ -35,10 +31,6 @@ class LessThanCriteriaTest extends TestCase
         $this->assertCount(2, $filtered_users);
     }
 
-    /**
-     * Less Than Criteria
-     * Case: value not found
-     */
     public function test_less_than_criteria_when_not_found(): void
     {
         $criteria = new LessThanCriteria('profile_id', -1);
