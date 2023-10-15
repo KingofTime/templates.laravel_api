@@ -2,14 +2,13 @@
 
 namespace App\Criterias\Common;
 
-use App\Criterias\Base\Criteria;
 use App\Criterias\Contracts\CriteriaInterface;
 
 class Query
 {
-    public static function all(): Criteria
+    public static function all(): AllCriteria
     {
-        return new Criteria();
+        return new AllCriteria();
     }
 
     public static function eq(string $field, mixed $value): EqualsCriteria

@@ -5,6 +5,7 @@ namespace App\Repositories\Base;
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class ResourceRepository extends Repository
@@ -22,7 +23,7 @@ abstract class ResourceRepository extends Repository
     /**
      * @return Collection<int, Model>
      */
-    public function get(CriteriaInterface $criteria, string $order_by, string $sort): Collection
+    public function get(CriteriaInterface $criteria, string $order_by = 'id', string $sort = 'asc'): Collection
     {
         return $criteria->apply($this->getModel())
             ->orderBy($order_by, $sort)
@@ -32,7 +33,7 @@ abstract class ResourceRepository extends Repository
     /**
      * @return LengthAwarePaginator<Model>
      */
-    public function paginate(CriteriaInterface $criteria, int $page, int $per_page, string $page_name, string $order_by, string $sort): LengthAwarePaginator
+    public function paginate(CriteriaInterface $criteria, int $page, int $per_page, string $page_name, string $order_by = 'id', string $sort = 'asc'): LengthAwarePaginator
     {
         return $criteria->apply($this->getModel())
             ->orderBy($order_by, $sort)
@@ -63,10 +64,36 @@ abstract class ResourceRepository extends Repository
             ->update($data);
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function updateBatch(CriteriaInterface $criteria, array $data): void
+    {
+        $builder = $criteria->apply($this->getModel());
+
+        if (count($builder->get()) == 0) {
+            throw new ModelNotFoundException();
+        }
+
+        $builder->update($data);
+
+    }
+
     public function delete(CriteriaInterface $criteria): void
     {
         $criteria->apply($this->getModel())
             ->firstOrFail()
             ->delete();
+    }
+
+    public function deleteBatch(CriteriaInterface $criteria): void
+    {
+        $builder = $criteria->apply($this->getModel());
+
+        if (count($builder->get()) == 0) {
+            throw new ModelNotFoundException();
+        }
+
+        $builder->delete();
     }
 }

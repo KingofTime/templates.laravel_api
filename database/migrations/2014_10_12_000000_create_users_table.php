@@ -20,6 +20,7 @@ return new class() extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('profile_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

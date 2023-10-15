@@ -4,7 +4,7 @@ namespace Tests\Unit\Criterias;
 
 use App\Criterias\Common\NotEqualCriteria;
 use App\Models\User;
-use Database\Seeders\UserSeeder;
+use Database\Seeders\GenericTestSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ class NotEqualCriteriaTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(UserSeeder::class);
+        $this->seed(GenericTestSeeder::class);
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Criterias\Common\LessThanEqualCriteria;
 use App\Criterias\Common\NotEqualCriteria;
 use App\Criterias\Common\QueueCriteria;
 use App\Models\User;
-use Database\Seeders\UserSeeder;
+use Database\Seeders\GenericTestSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,7 +19,7 @@ class QueueCriteriaTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(UserSeeder::class);
+        $this->seed(GenericTestSeeder::class);
     }
 
     public function test_queue_criteria(): void

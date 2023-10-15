@@ -1,2 +1,2 @@
-    public function test_max_$SINGULAR_MODEL_NAME$()
+    public function test_max_$SINGULAR_MODEL_NAME$(): void
     {}
