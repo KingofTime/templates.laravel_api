@@ -2,16 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Base\ResourceRepository;
-$IMPORT_TRAITS$
-use App\Models\$MODEL_NAME$;
+use App\Repositories\Base\Repository;
+$IMPORTS$
 
-class $CLASS_NAME$ extends ResourceRepository
+class $CLASS_NAME$ extends Repository
 {
-    $USE_TRAITS$
+    $USES$
 
-    protected function getModel(): $MODEL_NAME$
-    {
-        return new $MODEL_NAME$();
-    }
+$DEPENDENCIES$
 }

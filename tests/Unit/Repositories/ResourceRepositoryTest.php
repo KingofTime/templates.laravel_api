@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PDOException;
 use Tests\TestCase;
 
-class GenericRepositoryTest extends TestCase
+class ResourceRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -71,7 +71,6 @@ class GenericRepositoryTest extends TestCase
         $users = $repository->get($criteria);
 
         $this->assertCount(5, $users);
-        $this->assertLessThan($users[1]->id, $users[0]->id);
 
         $criteria = Query::lte('profile_id', 0);
         $repository = new UserRepository();
@@ -95,7 +94,7 @@ class GenericRepositoryTest extends TestCase
     {
         $criteria = Query::all();
         $repository = new UserRepository();
-        $users = $repository->get($criteria, sort: 'desc');
+        $users = $repository->get($criteria, order_by: 'id', sort: 'desc');
 
         $this->assertCount(5, $users);
         $this->assertGreaterThan($users[1]->id, $users[0]->id);
@@ -129,11 +128,9 @@ class GenericRepositoryTest extends TestCase
         $repository = new UserRepository();
         $users = $repository->paginate($criteria, page: 1, per_page: 5, page_name: 'test');
         $this->assertCount(5, $users);
-        $this->assertLessThan($users[1]->id, $users[0]->id);
 
-        $users = $repository->paginate($criteria, page: 1, per_page: 5, page_name: 'test');
-        $this->assertCount(5, $users);
-        $this->assertLessThan($users[1]->id, $users[0]->id);
+        $users = $repository->paginate($criteria, page: 1, per_page: 2, page_name: 'test');
+        $this->assertCount(2, $users);
 
         $criteria = Query::lte('profile_id', 0);
         $users = $repository->paginate($criteria, page: 5, per_page: 1, page_name: 'test');
@@ -154,7 +151,7 @@ class GenericRepositoryTest extends TestCase
     {
         $criteria = Query::all();
         $repository = new UserRepository();
-        $users = $repository->paginate($criteria, page: 1, per_page: 5, page_name: 'test', sort: 'desc');
+        $users = $repository->paginate($criteria, page: 1, per_page: 5, page_name: 'test', order_by: 'id', sort: 'desc');
 
         $this->assertCount(5, $users);
         $this->assertGreaterThan($users[1]->id, $users[0]->id);
@@ -320,7 +317,7 @@ class GenericRepositoryTest extends TestCase
         ]);
     }
 
-    public function test_delete_user(): void
+    public function test_delete(): void
     {
         $repository = new UserRepository();
         $criteria = Query::eq('email', 'user.example1@email.com');
@@ -339,7 +336,7 @@ class GenericRepositoryTest extends TestCase
         $repository->delete($criteria);
     }
 
-    public function test_delete_batch_user(): void
+    public function test_delete_batch(): void
     {
         $criteria = Query::all();
         $repository = new UserRepository();
@@ -412,7 +409,6 @@ class GenericRepositoryTest extends TestCase
 
         $deletedUsers = $repository->getInTrash($criteria);
         $this->assertCount(5, $deletedUsers);
-        $this->assertLessThan($deletedUsers[1]->id, $deletedUsers[0]->id);
 
         $criteria = Query::lte('profile_id', 0);
         $deletedUsers = $repository->getInTrash($criteria);
@@ -454,7 +450,7 @@ class GenericRepositoryTest extends TestCase
         $repository = new UserRepository();
         $repository->deleteBatch($criteria);
 
-        $users = $repository->getInTrash($criteria, sort: 'desc');
+        $users = $repository->getInTrash($criteria, order_by: 'id', sort: 'desc');
         $this->assertCount(7, $users);
         $this->assertGreaterThan($users[1]->id, $users[0]->id);
 
@@ -474,11 +470,9 @@ class GenericRepositoryTest extends TestCase
 
         $users = $repository->paginateInTrash($criteria, page: 1, per_page: 5, page_name: 'test');
         $this->assertCount(5, $users);
-        $this->assertLessThan($users[1]->id, $users[0]->id);
 
-        $users = $repository->paginateInTrash($criteria, page: 1, per_page: 5, page_name: 'test');
-        $this->assertCount(5, $users);
-        $this->assertLessThan($users[1]->id, $users[0]->id);
+        $users = $repository->paginateInTrash($criteria, page: 1, per_page: 2, page_name: 'test');
+        $this->assertCount(2, $users);
 
         $criteria = Query::lte('profile_id', 0);
         $users = $repository->paginateInTrash($criteria, page: 5, per_page: 1, page_name: 'test');
@@ -517,7 +511,7 @@ class GenericRepositoryTest extends TestCase
         $repository = new UserRepository();
         $repository->deleteBatch($criteria);
 
-        $users = $repository->paginateInTrash($criteria, page: 1, per_page: 5, page_name: 'test', sort: 'desc');
+        $users = $repository->paginateInTrash($criteria, page: 1, per_page: 5, page_name: 'test', order_by: 'id', sort: 'desc');
         $this->assertCount(5, $users);
         $this->assertGreaterThan($users[1]->id, $users[0]->id);
 

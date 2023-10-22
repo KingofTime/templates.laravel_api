@@ -8,12 +8,14 @@ use function Laravel\Prompts\multiselect;
 
 class MakeRepositories extends GenericMakeCommand
 {
-    public const EXTRA_FEATURES = [
-        'trash' => [
-            'trait_name' => 'TrashMethods',
+    public const FEATURES = [
+        'crud' => [
+            'name' => 'CRUDMethods',
+            'dependencies' => ['get_model'],
         ],
-        'aggregation' => [
-            'trait_name' => 'AggregationMethods',
+        'trash' => [
+            'name' => 'TrashMethods',
+            'dependencies' => ['get_model'],
         ],
     ];
 
@@ -36,29 +38,30 @@ class MakeRepositories extends GenericMakeCommand
      */
     public function handle(): void
     {
-        $extraFeatures = multiselect(
+        $features = multiselect(
             label: 'Do you want to add any extra modules?',
             options: [
+                'crud' => 'CRUD Features',
                 'trash' => 'Trash Features',
-                'aggregation' => 'Aggregation Features',
             ]
         );
 
-        $this->generateRepository($extraFeatures);
+        $this->generateRepository($features);
     }
 
     /**
-     * @param  array<int|string>  $extraFeatures
+     * @param  array<int|string>  $features
      */
-    private function generateRepository(array $extraFeatures): void
+    private function generateRepository(array $features): void
     {
-        $traits = $this->getContentExtraFeatures($extraFeatures);
+        $traits = $this->getContentFeatures($features);
         $path = $this->makeDirectory('app/Repositories');
         $content = $this->getContent('repository.stub', [
             'CLASS_NAME' => $this->argument('name'),
             'MODEL_NAME' => $this->getModelName(),
-            'IMPORT_TRAITS' => $traits['imports'],
-            'USE_TRAITS' => $traits['uses'],
+            'IMPORTS' => $traits['imports'],
+            'USES' => $traits['uses'],
+            'DEPENDENCIES' => $traits['dependencies'],
         ]);
         $file = "{$path}/{$this->argument('name')}.php";
         $this->makeFile($file, $content);
@@ -70,23 +73,44 @@ class MakeRepositories extends GenericMakeCommand
     }
 
     /**
-     * @param  array<int|string>  $extraFeatures
+     * @param  array<int|string|string[]>  $features
      * @return string[]
      */
-    private function getContentExtraFeatures(array $extraFeatures): array
+    private function getContentFeatures(array $features): array
     {
         $imports = '';
         $uses = '';
-        foreach ($extraFeatures as $feature) {
-            $trait = self::EXTRA_FEATURES[$feature]['trait_name'];
+        $dependencies = '';
+        $model = $this->getModelName();
+
+        foreach ($features as $feature) {
+            $trait = self::FEATURES[$feature]['name'];
 
             $imports .= "use App\Repositories\Base\Traits\\{$trait};\n";
             $uses .= "use {$trait};\n\t";
         }
 
+        $dependency_names = array_unique(
+            array_merge(
+                ...array_map(fn (string $feature) => self::FEATURES[$feature]['dependencies'], $features)
+            )
+        );
+
+        foreach ($dependency_names as $dependency_name) {
+            $dependencies .= parent::getContent("repository.dependencies.{$dependency_name}.stub", [
+                'MODEL_NAME' => $model,
+            ]);
+            $dependencies .= "\n";
+
+            if ($dependency_name == 'get_model') {
+                $imports .= "\nuse App\Models\\".$model.";\n";
+            }
+        }
+
         return [
             'imports' => $imports,
             'uses' => $uses,
+            'dependencies' => $dependencies,
         ];
     }
 }

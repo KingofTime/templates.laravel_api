@@ -3,13 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Repositories\Base\ResourceRepository;
-use App\Repositories\Base\Traits\AggregationMethods;
+use App\Repositories\Base\Repository;
+use App\Repositories\Base\Traits\CRUDMethods;
 use App\Repositories\Base\Traits\TrashMethods;
 
-class UserRepository extends ResourceRepository
+class UserRepository extends Repository
 {
-    use AggregationMethods;
+    use CRUDMethods;
     use TrashMethods;
 
     protected function getModel(): User

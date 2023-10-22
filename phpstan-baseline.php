@@ -24,23 +24,13 @@ $ignoreErrors[] = [
     'path' => __DIR__.'/tests/Unit/Repositories/GenericRepositoryTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Cannot access property \\$id on Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|null\\.$#',
-    'count' => 6,
-    'path' => __DIR__.'/tests/Unit/Repositories/GenericRepositoryTest.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Cannot access property \\$id on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#',
-    'count' => 14,
-    'path' => __DIR__.'/tests/Unit/Repositories/GenericRepositoryTest.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Cannot access property \\$name on Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|null\\.$#',
-    'count' => 2,
+    'count' => 8,
     'path' => __DIR__.'/tests/Unit/Repositories/GenericRepositoryTest.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Cannot access property \\$name on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#',
-    'count' => 6,
+    'count' => 8,
     'path' => __DIR__.'/tests/Unit/Repositories/GenericRepositoryTest.php',
 ];
 $ignoreErrors[] = [
