@@ -5,11 +5,11 @@ namespace App\Repositories\Base\Traits;
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
 
-trait DeleteMethods
+trait RemoveMethods
 {
     abstract protected function getModel(): Model;
 
-    public function delete(CriteriaInterface $criteria): void
+    public function remove(CriteriaInterface $criteria): void
     {
         $criteria->apply($this->getModel())
             ->firstOrFail()

@@ -17,3 +17,17 @@ class UserRepository extends Repository
         return new User();
     }
 }
+
+/**
+ * retrieve
+ * list
+ * paginate
+ * create
+ * create batch
+ * update
+ * update batch
+ * remove
+ * remove batch
+ * force remove
+ * force remove batch
+ */

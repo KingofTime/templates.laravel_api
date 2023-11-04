@@ -13,7 +13,7 @@ trait ListTrashedMethods
     /**
      * @return Collection<int, Model>
      */
-    public function getInTrash(CriteriaInterface $criteria, string $order_by = null, string $sort = null): Collection
+    public function listInTrash(CriteriaInterface $criteria, string $order_by = null, string $sort = null): Collection
     {
         $builder = $criteria->apply($this->getModel()) //@phpstan-ignore-line
             ->onlyTrashed();

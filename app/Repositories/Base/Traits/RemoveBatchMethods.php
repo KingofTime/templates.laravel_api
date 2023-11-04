@@ -6,11 +6,11 @@ use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-trait DeleteBatchMethods
+trait RemoveBatchMethods
 {
     abstract protected function getModel(): Model;
 
-    public function deleteBatch(CriteriaInterface $criteria): void
+    public function removeBatch(CriteriaInterface $criteria): void
     {
         $builder = $criteria->apply($this->getModel());
 

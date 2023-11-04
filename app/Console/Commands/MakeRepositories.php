@@ -8,7 +8,7 @@ use function Laravel\Prompts\multiselect;
 
 class MakeRepositories extends GenericMakeCommand
 {
-    public const FEATURES = [
+    private const FEATURES = [
         'crud' => [
             'name' => 'CRUDMethods',
             'dependencies' => ['get_model'],
@@ -73,7 +73,7 @@ class MakeRepositories extends GenericMakeCommand
     }
 
     /**
-     * @param  array<int|string|string[]>  $features
+     * @param  array<int|string>  $features
      * @return string[]
      */
     private function getContentFeatures(array $features): array
@@ -92,7 +92,7 @@ class MakeRepositories extends GenericMakeCommand
 
         $dependency_names = array_unique(
             array_merge(
-                ...array_map(fn (string $feature) => self::FEATURES[$feature]['dependencies'], $features)
+                ...array_map(fn (string|int $feature) => self::FEATURES[$feature]['dependencies'], $features)
             )
         );
 
@@ -102,6 +102,7 @@ class MakeRepositories extends GenericMakeCommand
             ]);
             $dependencies .= "\n";
 
+            //@phpstan-ignore-next-line
             if ($dependency_name == 'get_model') {
                 $imports .= "\nuse App\Models\\".$model.";\n";
             }

@@ -7,12 +7,13 @@ install:
 	./scripts/vendoring.sh
 	cp .env.example .env
 	./vendor/bin/sail up -d
+	./vendor/bin/sail artisan project:prepare
 
 scan:
-	./vendor/bin/phpstan analyse
+	./vendor/bin/sail php ./vendor/bin/phpstan analyse
 
 scan.generate_baseline:
-	./vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.php
+	./vendor/bin/sail php ./vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.php
 
 project.prepare:
 	./vendor/bin/sail artisan project:prepare
@@ -24,7 +25,7 @@ project.cache:
 	./vendor/bin/sail artisan project:cache
 
 lint:
-	./vendor/bin/pint --preset laravel
+	./vendor/bin/sail php ./vendor/bin/pint --preset laravel
 
 test:
 	./vendor/bin/sail artisan test --parallel --recreate-databases

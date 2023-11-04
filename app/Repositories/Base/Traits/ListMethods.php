@@ -13,7 +13,7 @@ trait ListMethods
     /**
      * @return Collection<int, Model>
      */
-    public function get(CriteriaInterface $criteria, string $order_by = null, string $sort = null): Collection
+    public function list(CriteriaInterface $criteria, string $order_by = null, string $sort = null): Collection
     {
         $builder = $criteria->apply($this->getModel());
 

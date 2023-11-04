@@ -5,11 +5,11 @@ namespace App\Repositories\Base\Traits;
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-trait ForceDeleteBatchMethods
+trait ForceRemoveBatchMethods
 {
-    public function forceDeleteBatch(CriteriaInterface $criteria): void
+    public function forceRemoveBatch(CriteriaInterface $criteria): void
     {
-        $builder = $criteria->apply($this->getModel())
+        $builder = $criteria->apply($this->getModel()) //@phpstan-ignore-line
             ->onlyTrashed();
 
         if (count($builder->get()) == 0) {
