@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Repositories\Traits;
 
+use App\Criterias\Common\Query;
 use App\Models\User;
 use App\Repositories\Base\Traits\AggregationMethods;
 use Database\Seeders\GenericTestSeeder;
@@ -23,5 +24,13 @@ class AggregateMethodsTest extends TestCase
     {
         parent::setUp();
         $this->seed(GenericTestSeeder::class);
+    }
+
+    public function testMax(): void
+    {
+        $criteria = Query::all();
+        $maxProfile = $this->max($criteria, "profile_id");
+
+        $this->assertEquals(4, $maxProfile);
     }
 }
