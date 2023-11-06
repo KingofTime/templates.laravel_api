@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Services;
+
+use App\Services\Base\Service;
+$IMPORTS$
+
+class $CLASS_NAME$ extends Service $INTERFACES$
+{
+    $USES$
+
+$DEPENDENCIES$
+}

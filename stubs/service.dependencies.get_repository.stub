@@ -1,0 +1,4 @@
+    protected function getRepository(): $REPOSITORY_NAME$
+    {
+        return new $REPOSITORY_NAME$();
+    }
