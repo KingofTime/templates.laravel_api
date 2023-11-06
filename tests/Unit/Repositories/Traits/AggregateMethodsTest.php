@@ -29,7 +29,7 @@ class AggregateMethodsTest extends TestCase
     public function testMax(): void
     {
         $criteria = Query::all();
-        $maxProfile = $this->max($criteria, "profile_id");
+        $maxProfile = $this->max($criteria, 'profile_id');
 
         $this->assertEquals(4, $maxProfile);
     }

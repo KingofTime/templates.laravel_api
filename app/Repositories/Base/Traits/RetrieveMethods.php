@@ -4,7 +4,6 @@ namespace App\Repositories\Base\Traits;
 
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait RetrieveMethods
 {
@@ -17,11 +16,7 @@ trait RetrieveMethods
 
     public function first(CriteriaInterface $criteria): Model
     {
-        $model = $criteria->apply($this->getModel())->first();
-
-        if ($model == null) {
-            throw new ModelNotFoundException();
-        }
+        $model = $criteria->apply($this->getModel())->firstOrFail();
 
         return $model;
     }

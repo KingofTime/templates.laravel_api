@@ -12,10 +12,12 @@ class MakeRepositories extends GenericMakeCommand
         'crud' => [
             'name' => 'CRUDMethods',
             'dependencies' => ['get_model'],
+            'interface' => 'CRUDInterface',
         ],
         'trash' => [
             'name' => 'TrashMethods',
             'dependencies' => ['get_model'],
+            'interface' => 'TrashInterface',
         ],
     ];
 
@@ -62,6 +64,7 @@ class MakeRepositories extends GenericMakeCommand
             'IMPORTS' => $traits['imports'],
             'USES' => $traits['uses'],
             'DEPENDENCIES' => $traits['dependencies'],
+            'INTERFACES' => $traits['interfaces'],
         ]);
         $file = "{$path}/{$this->argument('name')}.php";
         $this->makeFile($file, $content);
@@ -81,13 +84,19 @@ class MakeRepositories extends GenericMakeCommand
         $imports = '';
         $uses = '';
         $dependencies = '';
+        $interfaces_list = [];
+
         $model = $this->getModelName();
 
         foreach ($features as $feature) {
             $trait = self::FEATURES[$feature]['name'];
+            $interface = self::FEATURES[$feature]['interface'];
 
+            $imports .= "use App\Repositories\Base\Contracts\\{$interface};\n";
             $imports .= "use App\Repositories\Base\Traits\\{$trait};\n";
             $uses .= "use {$trait};\n\t";
+
+            $interfaces_list[] = $interface;
         }
 
         $dependency_names = array_unique(
@@ -108,10 +117,17 @@ class MakeRepositories extends GenericMakeCommand
             }
         }
 
+        if (count($interfaces_list)) {
+            $interfaces = 'implements '.implode(', ', $interfaces_list);
+        } else {
+            $interfaces = '';
+        }
+
         return [
             'imports' => $imports,
             'uses' => $uses,
             'dependencies' => $dependencies,
+            'interfaces' => $interfaces,
         ];
     }
 }

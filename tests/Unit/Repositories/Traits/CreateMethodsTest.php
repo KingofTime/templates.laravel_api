@@ -5,7 +5,6 @@ namespace Tests\Unit\Repositories\Traits;
 use App\Models\User;
 use App\Repositories\Base\Traits\CreateMethods;
 use Database\Seeders\GenericTestSeeder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PDOException;
 use Tests\TestCase;
@@ -15,7 +14,7 @@ class CreateMethodsTest extends TestCase
     use CreateMethods;
     use RefreshDatabase;
 
-    protected function getModel(): Model
+    protected function getModel(): User
     {
         return new User();
     }

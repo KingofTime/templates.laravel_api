@@ -4,7 +4,6 @@ namespace App\Repositories\Base\Traits;
 
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait RetrieveTrashedMethods
 {
@@ -21,11 +20,7 @@ trait RetrieveTrashedMethods
     {
         $model = $criteria->apply($this->getModel())  //@phpstan-ignore-line
             ->onlyTrashed()
-            ->first();
-
-        if ($model == null) {
-            throw new ModelNotFoundException();
-        }
+            ->firstOrFail();
 
         return $model;
     }

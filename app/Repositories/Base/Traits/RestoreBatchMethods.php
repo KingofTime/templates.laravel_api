@@ -12,7 +12,7 @@ trait RestoreBatchMethods
 
     public function restoreBatch(CriteriaInterface $criteria): void
     {
-        $builder = $criteria->apply($this->getModel())
+        $builder = $criteria->apply($this->getModel()) //@phpstan-ignore-line
             ->onlyTrashed();
 
         if (count($builder->get()) == 0) {

@@ -13,12 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(5)
-            ->sequence(fn (Sequence $sequence) => [
-                'name' => "User {$sequence->index}",
-                'email' => "user.example{$sequence->index}@email.com",
-                'profile_id' => $sequence->index,
-            ])
+        User::factory()->count(2)
             ->create();
     }
 }

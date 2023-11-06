@@ -29,7 +29,7 @@ class RetrieveTrashedMethodsTest extends TestCase
 
     public function testFindInTrash(): void
     {
-        $user = User::where('email', 'user.example1@email.com')->first();
+        $user = User::where('email', 'user.example1@email.com')->firstOrFail();
         $id = $user->id;
         $user->delete();
 
@@ -45,7 +45,7 @@ class RetrieveTrashedMethodsTest extends TestCase
 
     public function testFirstInTrash(): void
     {
-        $user = User::where('email', 'user.example1@email.com')->first();
+        $user = User::where('email', 'user.example1@email.com')->firstOrFail();
         $user->delete();
 
         $criteria = Query::eq('email', 'user.example1@email.com');
@@ -65,7 +65,7 @@ class RetrieveTrashedMethodsTest extends TestCase
         $criteria = Query::eq('name', 'User 0');
         $this->assertEquals(false, $this->existsInTrash($criteria));
 
-        $user = User::where('name', 'User 0')->first();
+        $user = User::where('name', 'User 0')->firstOrFail();
         $user->delete();
 
         $criteria = Query::eq('name', 'User 0');
