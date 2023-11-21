@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\Commands\Base\GenericMakeCommand;
+
 use function Laravel\Prompts\multiselect;
 
 class MakeServices extends GenericMakeCommand

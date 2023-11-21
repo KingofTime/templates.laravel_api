@@ -4,6 +4,7 @@ namespace App\Services\Base\Traits;
 
 use App\Criterias\Contracts\CriteriaInterface;
 use App\Repositories\Base\Contracts\PaginateInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait PaginateMethods
