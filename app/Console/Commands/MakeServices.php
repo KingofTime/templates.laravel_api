@@ -53,15 +53,14 @@ class MakeServices extends GenericMakeCommand
      */
     private function generateService(array $features): void
     {
-        $traits = $this->getContentFeatures($features);
+        $contentFeatures = $this->getContentFeatures($features);
         $path = $this->makeDirectory('app/Services');
         $content = $this->getContent('service.stub', [
-            'CLASS_NAME' => $this->argument('name'),
-            'REPOSITORY_NAME' => $this->getRepositoryName(),
-            'IMPORTS' => $traits['imports'],
-            'USES' => $traits['uses'],
-            'DEPENDENCIES' => $traits['dependencies'],
-            'INTERFACES' => $traits['interfaces'],
+            'class' => $this->argument('name'),
+            'imports' => $contentFeatures['imports'],
+            'traits' => $contentFeatures['traits'],
+            'dependencies' => $contentFeatures['dependencies'],
+            'interfaces' => $contentFeatures['interfaces'],
         ]);
         $file = "{$path}/{$this->argument('name')}.php";
         $this->makeFile($file, $content);
@@ -79,7 +78,7 @@ class MakeServices extends GenericMakeCommand
     private function getContentFeatures(array $features): array
     {
         $imports = '';
-        $uses = '';
+        $traits = '';
         $dependencies = '';
         $interfaces_list = [];
 
@@ -91,7 +90,7 @@ class MakeServices extends GenericMakeCommand
 
             $imports .= "use App\Services\Base\Contracts\\{$interface};\n";
             $imports .= "use App\Services\Base\Traits\\{$trait};\n";
-            $uses .= "use {$trait};\n\t";
+            $traits .= "use {$trait};\n\t";
 
             $interfaces_list[] = $interface;
         }
@@ -103,8 +102,8 @@ class MakeServices extends GenericMakeCommand
         );
 
         foreach ($dependency_names as $dependency_name) {
-            $dependencies .= parent::getContent("service.dependencies.{$dependency_name}.stub", [
-                'REPOSITORY_NAME' => $repository,
+            $dependencies .= parent::getContent("service-dependencies.{$dependency_name}.stub", [
+                'repository' => $repository,
             ]);
             $dependencies .= "\n";
 
@@ -122,7 +121,7 @@ class MakeServices extends GenericMakeCommand
 
         return [
             'imports' => $imports,
-            'uses' => $uses,
+            'traits' => $traits,
             'dependencies' => $dependencies,
             'interfaces' => $interfaces,
         ];

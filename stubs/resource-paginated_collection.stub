@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Users;
+namespace {{ namespace }};
 
+use App\Http\Resources\Base\PaginatedCollection;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class $COLLECTION_NAME$ extends ResourceCollection
+class {{ class }} extends PaginatedCollection
 {
     /**
      * Transform the resource collection into an array.

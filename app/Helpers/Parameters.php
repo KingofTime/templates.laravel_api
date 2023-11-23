@@ -31,6 +31,10 @@ class Parameters
         $this->filters = $this->extractFilters($parameters);
     }
 
+    /**
+     * @param  array<mixed>  $parameters
+     * @return int[]
+     */
     private function extractPagination(array &$parameters): array
     {
         if (array_key_exists('page', $parameters)) {
@@ -44,6 +48,10 @@ class Parameters
         return $pagination;
     }
 
+    /**
+     * @param  array<mixed>  $parameters
+     * @return string[]
+     */
     private function extractSorting(array &$parameters): array
     {
         if (array_key_exists('order_by', $parameters)) {
@@ -57,6 +65,9 @@ class Parameters
         return $sorting;
     }
 
+    /**
+     * @param  array<mixed>  $parameters
+     */
     private function extractFilters(array $parameters): QueueCriteria
     {
         $filters = Query::queue(...array_map(
@@ -70,7 +81,7 @@ class Parameters
         return $filters;
     }
 
-    public function hasPagination()
+    public function hasPagination(): bool
     {
         return (bool) $this->pagination;
     }

@@ -14,6 +14,7 @@ class PaginatedCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        //@phpstan-ignore-next-line
         $paginated = $this->resource->toArray();
 
         return [

@@ -35,7 +35,7 @@ abstract class GenericMakeCommand extends Command
 
         if ($contents) {
             foreach ($variables as $search => $replace) {
-                $contents = str_replace('$'.$search.'$', $replace, $contents);
+                $contents = str_replace('{{ '.$search.' }}', $replace, $contents);
             }
 
             return $contents;
@@ -51,5 +51,13 @@ abstract class GenericMakeCommand extends Command
         } else {
             $this->info("File : {$path} already exits");
         }
+    }
+
+    /**
+     * @param  array<string>  $values
+     */
+    protected function join(string $separator, array $values): string
+    {
+        return trim(implode($separator, $values), $separator);
     }
 }

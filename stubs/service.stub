@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Services\Base\Service;
-$IMPORTS$
+{{ imports }}
 
-class $CLASS_NAME$ extends Service $INTERFACES$
+class {{ class }} extends Service {{ interfaces }}
 {
-    $USES$
+    {{ traits }}
 
-$DEPENDENCIES$
+{{ dependencies }}
 }

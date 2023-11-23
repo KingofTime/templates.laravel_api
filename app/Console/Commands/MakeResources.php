@@ -13,7 +13,7 @@ class MakeResources extends GenericMakeCommand
      *
      * @var string
      */
-    protected $signature = 'make:custom_resources {name} {--domain=}';
+    protected $signature = 'make:resources {name} {--domain=}';
 
     /**
      * The console command description.
@@ -50,9 +50,12 @@ class MakeResources extends GenericMakeCommand
 
     private function generateResource(): void
     {
-        $path = $this->makeDirectory("app/Http/Resources{$this->getDomain()}");
-        $content = $this->getContent('custom_resources.resource.stub', [
-            'RESOURCE_NAME' => $this->getResourceName(),
+        $path = $this->makeDirectory(
+            $this->join('/', ['app/Http/Resources', $this->getDomain()])
+        );
+        $content = $this->getContent('resource.stub', [
+            'class' => $this->getResourceName(),
+            'namespace' => $this->getNamespace(),
         ]);
         $file = "{$path}/{$this->getResourceName()}.php";
         $this->makeFile($file, $content);
@@ -60,9 +63,12 @@ class MakeResources extends GenericMakeCommand
 
     private function generateCollection(): void
     {
-        $path = $this->makeDirectory("app/Http/Resources{$this->getDomain()}");
-        $content = $this->getContent('custom_resources.collection.stub', [
-            'COLLECTION_NAME' => $this->getCollectionName(),
+        $path = $this->makeDirectory(
+            $this->join('/', ['app/Http/Resources', $this->getDomain()])
+        );
+        $content = $this->getContent('resource-collection.stub', [
+            'class' => $this->getCollectionName(),
+            'namespace' => $this->getNamespace(),
         ]);
         $file = "{$path}/{$this->getCollectionName()}.php";
         $this->makeFile($file, $content);
@@ -70,9 +76,12 @@ class MakeResources extends GenericMakeCommand
 
     private function generatePaginatedCollection(): void
     {
-        $path = $this->makeDirectory("app/Http/Resources{$this->getDomain()}");
-        $content = $this->getContent('custom_resources.paginated_collection.stub', [
-            'PAGINATED_COLLECTION_NAME' => $this->getPaginatedCollectionName(),
+        $path = $this->makeDirectory(
+            $this->join('/', ['app/Http/Resources', $this->getDomain()])
+        );
+        $content = $this->getContent('resource-paginated_collection.stub', [
+            'class' => $this->getPaginatedCollectionName(),
+            'namespace' => $this->getNamespace(),
         ]);
         $file = "{$path}/{$this->getPaginatedCollectionName()}.php";
         $this->makeFile($file, $content);
@@ -82,7 +91,12 @@ class MakeResources extends GenericMakeCommand
     {
         $domain = $this->option('domain');
 
-        return $domain ? '/'.ucfirst($domain) : '';
+        return $domain ? ucfirst($domain) : '';
+    }
+
+    private function getNamespace(): string
+    {
+        return $this->join('\\', ['App\\Http\\Resources', $this->getDomain()]);
     }
 
     private function getResourceName(): string

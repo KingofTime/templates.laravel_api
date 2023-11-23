@@ -1,0 +1,4 @@
+    protected function getRepository(): {{ repository }}
+    {
+        return new {{ repository }}();
+    }

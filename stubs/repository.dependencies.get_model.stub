@@ -1,4 +1,0 @@
-    protected function getModel(): $MODEL_NAME$
-    {
-        return new $MODEL_NAME$();
-    }
