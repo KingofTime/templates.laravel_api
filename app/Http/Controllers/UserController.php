@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Criterias\Common\Query;
 use App\Helpers\Parameters;
+use App\Http\Resources\Users\PaginatedUserCollection;
+use App\Http\Resources\Users\UserCollection;
+use App\Http\Resources\Users\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +14,8 @@ class UserController extends Controller
 {
     public function __construct(
         protected UserService $userService
-    ){}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,32 +25,29 @@ class UserController extends Controller
         $parameters = new Parameters($request);
 
         if ($parameters->hasPagination()) {
-            $collection = $this->userService->paginate(
+            $users = $this->userService->paginate(
                 $parameters->getFilters(),
                 $parameters->getPage(),
                 $parameters->getPerPage(),
-                "users.index",
+                'users.index',
                 $parameters->getOrderBy(),
                 $parameters->getSort()
             );
+
+            $collection = new PaginatedUserCollection($users);
         } else {
-            $collection = $this->userService->list(
+            $users = $this->userService->list(
                 $parameters->getFilters(),
                 $parameters->getOrderBy(),
                 $parameters->getSort()
             );
+
+            $collection = new UserCollection($users);
         }
 
         return response()->json($collection, Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +62,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = $this->userService->find($id);
+        $resource = new UserResource($user);
+
+        return response()->json($resource, Response::HTTP_OK);
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Services\Base\Contracts;
 
-interface TrashInterface extends RetrieveTrashedInterface, ListTrashedInterface, PaginateTrashedInterface, RestoreInterface, ForceRemoveInterface
+interface TrashInterface extends ForceRemoveInterface, ListTrashedInterface, PaginateTrashedInterface, RestoreInterface, RetrieveTrashedInterface
 {
-
 }
