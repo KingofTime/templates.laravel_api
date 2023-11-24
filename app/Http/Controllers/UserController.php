@@ -2,92 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Parameters;
+use App\Http\Controllers\Base\Controller;
+use App\Http\Controllers\Base\Traits\Destroy;
+use App\Http\Controllers\Base\Traits\Index;
+use App\Http\Controllers\Base\Traits\Show;
+use App\Http\Controllers\Base\Traits\Store;
+use App\Http\Controllers\Base\Traits\Update;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\Users\PaginatedUserCollection;
 use App\Http\Resources\Users\UserCollection;
 use App\Http\Resources\Users\UserResource;
 use App\Services\UserService;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
-    public function __construct(
-        protected UserService $userService
-    ) {
+    use Destroy, Index, Show, Store, Update;
+
+    protected function getService(): UserService
+    {
+        return new UserService();
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    protected function getCollection(Collection $data): UserCollection
     {
-        $parameters = new Parameters($request);
-
-        if ($parameters->hasPagination()) {
-            $users = $this->userService->paginate(
-                $parameters->getFilters(),
-                $parameters->getPage(),
-                $parameters->getPerPage(),
-                'users.index',
-                $parameters->getOrderBy(),
-                $parameters->getSort()
-            );
-
-            $collection = new PaginatedUserCollection($users);
-        } else {
-            $users = $this->userService->list(
-                $parameters->getFilters(),
-                $parameters->getOrderBy(),
-                $parameters->getSort()
-            );
-
-            $collection = new UserCollection($users);
-        }
-
-        return response()->json($collection, Response::HTTP_OK);
+        return new UserCollection($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    protected function getPaginatedCollection(LengthAwarePaginator $data): PaginatedUserCollection
     {
-
+        return new PaginatedUserCollection($data);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    protected function getRequest(): UserRequest
     {
-        $user = $this->userService->find($id);
-        $resource = new UserResource($user);
-
-        return response()->json($resource, Response::HTTP_OK);
+        return app(UserRequest::class);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    protected function getResource(Model $data): UserResource
     {
-        //
+        return new UserResource($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    protected function getResourceName(): string
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return 'users';
     }
 }

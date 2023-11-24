@@ -4,7 +4,7 @@ namespace App\Services\Base\Contracts;
 
 use App\Criterias\Contracts\CriteriaInterface;
 
-interface UpdateBatchInterface
+interface UpdateBatchInterface extends ServiceInterface
 {
     /**
      * @param  array<string, mixed>  $data

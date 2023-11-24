@@ -4,7 +4,7 @@ namespace App\Services\Base\Contracts;
 
 use App\Criterias\Contracts\CriteriaInterface;
 
-interface ForceRemoveInterface
+interface ForceRemoveInterface extends ServiceInterface
 {
     public function forceRemove(CriteriaInterface $criteria): void;
 }

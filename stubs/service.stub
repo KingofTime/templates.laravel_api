@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Services\Base\Service;
 {{ imports }}
 
-class {{ class }} extends Service {{ interfaces }}
+class {{ class }} {{ interfaces }}
 {
     {{ traits }}
 

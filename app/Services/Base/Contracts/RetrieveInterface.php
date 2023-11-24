@@ -5,7 +5,7 @@ namespace App\Services\Base\Contracts;
 use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
 
-interface RetrieveInterface
+interface RetrieveInterface extends ServiceInterface
 {
     public function find(int $id): Model;
 
