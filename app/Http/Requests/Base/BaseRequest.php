@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Base;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Validation\Validator;
 
 abstract class BaseRequest extends FormRequest
 {
@@ -20,5 +23,12 @@ abstract class BaseRequest extends FormRequest
             fn ($value) => htmlspecialchars(trim($value)),
             $data
         );
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+        $response = response()->json($errors->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        throw new HttpResponseException($response);
     }
 }
