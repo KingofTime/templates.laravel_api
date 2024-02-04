@@ -2,7 +2,7 @@
 
 namespace App\Services\Base\Contracts;
 
-interface CreateBatchInterface
+interface CreateBatchInterface extends ServiceInterface
 {
     /**
      * @param  array<array<string, mixed>>  $data

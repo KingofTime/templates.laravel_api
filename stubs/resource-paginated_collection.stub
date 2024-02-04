@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Http\Resources\Base\PaginatedCollection;
+use Illuminate\Http\Request;
+
+class {{ class }} extends PaginatedCollection
+{
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return parent::toArray($request);
+    }
+}

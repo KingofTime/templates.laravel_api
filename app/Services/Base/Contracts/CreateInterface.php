@@ -4,7 +4,7 @@ namespace App\Services\Base\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface CreateInterface
+interface CreateInterface extends ServiceInterface
 {
     /**
      * @param  array<string, mixed>  $data

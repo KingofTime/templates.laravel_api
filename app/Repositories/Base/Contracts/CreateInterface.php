@@ -4,7 +4,7 @@ namespace App\Repositories\Base\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface CreateInterface
+interface CreateInterface extends RepositoryInterface
 {
     /**
      * @param  array<string, mixed>  $data

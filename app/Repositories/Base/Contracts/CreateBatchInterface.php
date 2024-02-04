@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Base\Contracts;
 
-interface CreateBatchInterface
+interface CreateBatchInterface extends RepositoryInterface
 {
     /**
      * @param  array<array<string, mixed>>  $data

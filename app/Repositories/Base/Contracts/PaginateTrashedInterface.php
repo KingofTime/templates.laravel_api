@@ -6,7 +6,7 @@ use App\Criterias\Contracts\CriteriaInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface PaginateTrashedInterface
+interface PaginateTrashedInterface extends RepositoryInterface
 {
     /**
      * @return LengthAwarePaginator<Model>

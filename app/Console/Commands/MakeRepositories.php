@@ -56,15 +56,14 @@ class MakeRepositories extends GenericMakeCommand
      */
     private function generateRepository(array $features): void
     {
-        $traits = $this->getContentFeatures($features);
+        $contentFeatures = $this->getContentFeatures($features);
         $path = $this->makeDirectory('app/Repositories');
         $content = $this->getContent('repository.stub', [
-            'CLASS_NAME' => $this->argument('name'),
-            'MODEL_NAME' => $this->getModelName(),
-            'IMPORTS' => $traits['imports'],
-            'USES' => $traits['uses'],
-            'DEPENDENCIES' => $traits['dependencies'],
-            'INTERFACES' => $traits['interfaces'],
+            'class' => $this->argument('name'),
+            'imports' => $contentFeatures['imports'],
+            'traits' => $contentFeatures['traits'],
+            'dependencies' => $contentFeatures['dependencies'],
+            'interfaces' => $contentFeatures['interfaces'],
         ]);
         $file = "{$path}/{$this->argument('name')}.php";
         $this->makeFile($file, $content);
@@ -82,7 +81,7 @@ class MakeRepositories extends GenericMakeCommand
     private function getContentFeatures(array $features): array
     {
         $imports = '';
-        $uses = '';
+        $traits = '';
         $dependencies = '';
         $interfaces_list = [];
 
@@ -94,7 +93,7 @@ class MakeRepositories extends GenericMakeCommand
 
             $imports .= "use App\Repositories\Base\Contracts\\{$interface};\n";
             $imports .= "use App\Repositories\Base\Traits\\{$trait};\n";
-            $uses .= "use {$trait};\n\t";
+            $traits .= "use {$trait};\n\t";
 
             $interfaces_list[] = $interface;
         }
@@ -106,8 +105,8 @@ class MakeRepositories extends GenericMakeCommand
         );
 
         foreach ($dependency_names as $dependency_name) {
-            $dependencies .= parent::getContent("repository.dependencies.{$dependency_name}.stub", [
-                'MODEL_NAME' => $model,
+            $dependencies .= parent::getContent("repository-dependencies.{$dependency_name}.stub", [
+                'model' => $model,
             ]);
             $dependencies .= "\n";
 
@@ -125,7 +124,7 @@ class MakeRepositories extends GenericMakeCommand
 
         return [
             'imports' => $imports,
-            'uses' => $uses,
+            'traits' => $traits,
             'dependencies' => $dependencies,
             'interfaces' => $interfaces,
         ];

@@ -4,7 +4,7 @@ namespace App\Repositories\Base\Contracts;
 
 use App\Criterias\Contracts\CriteriaInterface;
 
-interface ForceRemoveBatchInterface
+interface ForceRemoveBatchInterface extends RepositoryInterface
 {
     public function forceRemoveBatch(CriteriaInterface $criteria): void;
 }

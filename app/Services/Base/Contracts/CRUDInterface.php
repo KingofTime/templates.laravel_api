@@ -2,6 +2,6 @@
 
 namespace App\Services\Base\Contracts;
 
-interface CRUDInterface extends CreateInterface, ListInterface, PaginateInterface, RemoveInterface, RetrieveInterface, UpdateInterface
+interface CRUDInterface extends CreateInterface, IndexInterface, RemoveInterface, RetrieveInterface, UpdateInterface
 {
 }

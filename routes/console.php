@@ -28,7 +28,7 @@ Artisan::command('project:prepare', function () {
     $steps = [
         'dev' => [
             'project:clear  --no-interaction',
-            'migrate:reset  --no-interaction',
+            'migrate:refresh  --no-interaction',
             'db:seed --no-interaction',
             'key:generate --no-interaction',
         ],
